@@ -1,7 +1,7 @@
+import './Navigation.css';
 import { NavLink, Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import MobileMenu from '../MobileMenu/MobileMenu';
-import './Navigation.css';
 
 const Navigation = ({ isLoggedIn, logIn }) => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });

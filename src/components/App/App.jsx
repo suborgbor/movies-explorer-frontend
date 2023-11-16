@@ -138,7 +138,6 @@ const App = () => {
   const loginUser = async (loginData) => {
     try {
       const res = await api.loginUser(loginData);
-      setIsOpenInfoTooltip(true);
       setToken(res.token);
       setIsLoggedIn(true);
       api.setAuthHeaders(res.token);
@@ -237,8 +236,8 @@ const App = () => {
                   <Movies
                     getMovies={getAllMovies}
                     movies={movies}
-                    addMovie={addMovieToSavedMovies}
-                    onDeleteFilm={deleteMovieToSavedMovies}
+                    onToggleSave={addMovieToSavedMovies}
+                    onDeleteSave={deleteMovieToSavedMovies}
                     checkSavedMovies={checkSavedMovies}
                   />
                 }
@@ -248,7 +247,7 @@ const App = () => {
                 element={
                   <SavedMovies
                     movies={savedMovies}
-                    onDeleteFilm={deleteMovieToSavedMovies}
+                    onDeleteSave={deleteMovieToSavedMovies}
                     checkSavedMovies={checkSavedMovies}
                   />
                 }

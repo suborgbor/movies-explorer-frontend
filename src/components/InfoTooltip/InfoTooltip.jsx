@@ -2,10 +2,10 @@ import './InfoTooltip.css';
 import React from 'react';
 import infoToltipSuccess from '../../images/Union.svg';
 import infoToltipFailure from '../../images/Union-krestik.svg';
-import { usePopupClose } from '../../hooks/usePopupClose';
+import { useClosePopup } from '../../hooks/useClosePopup';
 
 const InfoTooltip = ({ onClose, isOpen, isRegister }) => {
-  usePopupClose(isOpen, onClose);
+  useClosePopup(isOpen, onClose);
   return (
     <div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container popup_type_tooltip">

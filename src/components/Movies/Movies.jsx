@@ -1,40 +1,58 @@
-import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
+import './Movies.css';
 import { useMoviesContext } from '../../contexts/MoviesContext';
 import { useState } from "react";
-import './Movies.css';
 
-const Movies = ({ movies, addMovie, onDeleteFilm, checkSavedMovies, getMovies }) => {
-  const { initialSearchValue, setInitialSearchValue, shortFilm, setShortFilm, searched, setSearchedMovies } = useMoviesContext();
+const Movies = ({
+  movies,
+  onToggleSave,
+  onDeleteSave,
+  checkSavedMovies,
+  getMovies,
+}) => {
+
+  const {
+    searchQuery,
+    setSearchQuery,
+    shortFilm,
+    setShortFilm,
+    searched,
+    setSearched,
+  } = useMoviesContext();
+
   const [firstEntrance, setFirstEntrance] = useState(true);
 
   const handleSearchChange = (query) => {    
     if (!searched) {
       getMovies();
-      setSearchedMovies(true);
+      setSearched(true);
     }
     setFirstEntrance(false)
-    setInitialSearchValue(query);
-    localStorage.setItem('initialSearchValue', query);
+    setSearchQuery(query);
+    localStorage.setItem('searchQuery', query);
+
   };
 
-  const handleShortChange = (checked) => {setShortFilm(checked)};
+  const handleShortFilmChange = (checked) => {
+    setShortFilm(checked);
+  };
 
   return (
     <main className="movies">
       <SearchForm
-        initialSearchValue={initialSearchValue}
-        searchMovies={handleSearchChange}
-        onShortChange={handleShortChange}
+        searchQuery={searchQuery}
+        onSearch={handleSearchChange}
+        onShortFilmChange={handleShortFilmChange}
         shortFilm={shortFilm}
       />
       <MoviesCardList
         checkSavedMovies={checkSavedMovies}
-        onDeleteFilm={onDeleteFilm}
-        addMovie={addMovie}
+        onDeleteSave={onDeleteSave}
+        onToggleSave={onToggleSave}
         searched={searched}
         movies={movies}
-        initialSearchValue={initialSearchValue}
+        searchQuery={searchQuery}
         shortFilm={shortFilm}
         firstEntrance={firstEntrance}
       />

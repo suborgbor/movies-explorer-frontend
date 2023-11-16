@@ -1,22 +1,34 @@
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import useFormValidation from '../../hooks/useFormValidation';
+import useFormWithValidation from '../../hooks/useFormWithValidation';
 
-const SearchForm = ({ searchMovies, onShortChange, shortFilm, initialSearchValue = '' }) => {
-  const { values, handleChange } = useFormValidation({ search: initialSearchValue });
+const SearchForm = ({
+  onSearch,
+  onShortFilmChange,
+  shortFilm,
+  searchQuery = '',
+}) => {
+  const { values, handleChange } = useFormWithValidation({
+    search: searchQuery,
+  });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    searchMovies(values.search);
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      onSearch(values.search);
+      console.log(true)
   };
 
-  const changeShort = (event) => {
-    onShortChange(event.target.checked);
+  const handleShortFilmToggle = (e) => {
+    onShortFilmChange(e.target.checked);
   };
-
+  
   return (
     <section className="search">
-      <form className="search__form" name="search" Validate onSubmit={handleSubmit}>
+      <form
+        className="search__form"
+        name="search"
+        onSubmit={handleSubmit}
+      >
         <div className="search__container">
           <input
             className="search__input"
@@ -28,11 +40,17 @@ const SearchForm = ({ searchMovies, onShortChange, shortFilm, initialSearchValue
             value={values.search || ''}
             onChange={handleChange}
           />
-          <button className="search__button" type="submit"></button>
+          <button
+            className="search__button"
+            type="submit"
+          ></button>
         </div>
-        <span className="search__error">Введите ключевое слово</span>
+        <span className='search__error'>Введите ключевое слово</span>
 
-        <FilterCheckbox isChecked={shortFilm} onChangeShort={changeShort} />
+        <FilterCheckbox
+          isChecked={shortFilm}
+          onCheckboxChange={handleShortFilmToggle}
+        />
       </form>
     </section>
   );

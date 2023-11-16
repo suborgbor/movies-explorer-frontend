@@ -1,24 +1,24 @@
-import useFormValidation from '../../hooks/useFormValidation';
+import useFormWithValidation from '../../hooks/useFormWithValidation';
 import { durationFormat } from '../../utils/utils';
 import './MoviesCard.css';
 import { useLocation } from 'react-router-dom';
 
 const MoviesCard = ({
   movie,
-  addMovie,
-  onDeleteFilm,
+  onToggleSave,
+  onDeleteSave,
   checkSavedMovies,
 }) => {
-  const { values } = useFormValidation();
+  const { values } = useFormWithValidation();
   const path = useLocation().pathname;
   const isSaved = checkSavedMovies(movie);
 
   const handleSaveClick = () => {
-    !isSaved && addMovie(movie);
+    !isSaved && onToggleSave(movie);
   };
 
   const handleDeleteClick = () => {
-    onDeleteFilm(movie);
+    onDeleteSave(movie);
   };
 
   return (

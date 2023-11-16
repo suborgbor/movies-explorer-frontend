@@ -4,18 +4,18 @@ import './SavedMovies.css';
 import { useMoviesContext } from '../../contexts/MoviesContext';
 import { useState } from 'react';
 
-const SavedMovies = ({ movies, onDeleteFilm, checkSavedMovies }) => {
-  const { searched, setSearchedMovies } = useMoviesContext();
+const SavedMovies = ({ movies, onDeleteSave, checkSavedMovies }) => {
+  const { searched, setSearched } = useMoviesContext();
 
-  const [initialSearchValueSave, setInitialSearchValueSave] = useState('');
+  const [searchQuerySave, setSearchQuerySave] = useState('');
   const [shortFilmSave, setShortFilmSave] = useState(false);
 
   const handleSearchChange = (query) => {
-    setInitialSearchValueSave(query);
-    setSearchedMovies(true);
+    setSearchQuerySave(query);
+    setSearched(true);
   };
 
-  const handleShortChange = (checked) => {
+  const handleShortFilmChange = (checked) => {
     setShortFilmSave(checked);
     localStorage.setItem('shortFilmSave', checked);
   };
@@ -23,15 +23,15 @@ const SavedMovies = ({ movies, onDeleteFilm, checkSavedMovies }) => {
   return (
     <main className="saved-movies">
       <SearchForm
-        searchMovies={handleSearchChange}
-        onShortChange={handleShortChange}
+        onSearch={handleSearchChange}
+        onShortFilmChange={handleShortFilmChange}
         shortFilm={shortFilmSave}
       />
       <MoviesCardList
-        onDeleteFilm={onDeleteFilm}
+        onDeleteSave={onDeleteSave}
         searched={searched}
         movies={movies}
-        initialSearchValue={initialSearchValueSave}
+        searchQuery={searchQuerySave}
         shortFilm={shortFilmSave}
         checkSavedMovies={checkSavedMovies}
       />

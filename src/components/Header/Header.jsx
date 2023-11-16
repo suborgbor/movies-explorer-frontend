@@ -1,11 +1,10 @@
 import './Header.css';
+import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import Logo from '../../images/logo.svg';
-import { Link, useLocation } from 'react-router-dom';
 
 const Header = ({ isLoggedIn }) => {
   const location = useLocation();
-
   return (
     <header
       className={`header header_theme_${

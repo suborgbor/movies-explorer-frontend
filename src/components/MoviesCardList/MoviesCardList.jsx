@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom'
-import useResize from '../../hooks/useResize';
+import useSize from '../../hooks/useSize';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 import {
@@ -11,17 +11,17 @@ import {
 
 const MoviesCardList = ({
   movies,
-  addMovie,
-  onDeleteFilm,
+  onToggleSave,
+  onDeleteSave,
   checkSavedMovies,
-  initialSearchValue,
+  searchQuery,
   shortFilm,
   searched,
   firstEntrance
 }) => {
   const { pathname } = useLocation()
 
-  const screenWidth = useResize();
+  const screenWidth = useSize();
   let cardsToShow;
 
   if (screenWidth >= SCREEN_SIZE.L) {
@@ -40,13 +40,13 @@ const MoviesCardList = ({
           const movieNameRU = (movie.nameRU || '').toLowerCase();
           const movieNameEN = (movie.nameEN || '').toLowerCase();
 
-          const query = initialSearchValue || '';
+          const query = searchQuery || '';
 
-          const includesinitialSearchValue =
+          const includesSearchQuery =
             movieNameRU.includes(query.toLowerCase()) ||
             movieNameEN.includes(query.toLowerCase());
 
-          return includesinitialSearchValue && (!shortFilm || movie.duration <= 40);
+          return includesSearchQuery && (!shortFilm || movie.duration <= 40);
         })
         .slice(0, visibleCards)
     : [];
@@ -75,8 +75,8 @@ const MoviesCardList = ({
         <ul className="movies-cards__list">
           {filteredMovies.map((movie) => (
             <MoviesCard
-              onDeleteFilm={onDeleteFilm}
-              addMovie={addMovie}
+              onDeleteSave={onDeleteSave}
+              onToggleSave={onToggleSave}
               movie={movie}
               key={movie._id || movie.movieId}
               checkSavedMovies={checkSavedMovies}

@@ -1,25 +1,25 @@
+import './MenuBurger.css';
 import { useState } from 'react';
-import './BurgerMenu.css';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const BurgerMenu = () => {
-  const [isActiveBurger, setIsActiveBurger] = useState(false);
+const MenuBurger = () => {
+  const [isActive, setIsActive] = useState(false);
   const { pathname } = useLocation()
 
   const handleOpenBurger = () => {
-    setIsActiveBurger(!isActiveBurger);
+    setIsActive(!isActive);
   };
 
   const handleCloseBurger = () => {
-    setIsActiveBurger(false);
+    setIsActive(false);
   };
 
   return (
     <section
-      className={`${!isActiveBurger ? 'burger' : 'burger burger_type_active'}`}>
+      className={`${!isActive ? 'burger' : 'burger burger_type_active'}`}>
       <nav
         className={`${
-          !isActiveBurger
+          !isActive
             ? 'burger__navigation'
             : 'burger__navigation burger__navigation_type_active'
         }`}>
@@ -28,20 +28,20 @@ const BurgerMenu = () => {
             type="button"
             onClick={handleOpenBurger}
             className={`${
-              !isActiveBurger
+              !isActive
                 ? 'burger__button'
                 : 'burger__button burger__button_type_active'
             }`}>
             <span
               className={`${
-                !isActiveBurger
+                !isActive
                   ? 'burger__span'
                   : 'burger__span burger__span_type_active'
               }`}
             ></span>
           </button>
         </div>
-        {isActiveBurger ? (
+        {isActive ? (
           <>
             <ul className="burger__links">
               <li>
@@ -87,4 +87,4 @@ const BurgerMenu = () => {
   );
 };
 
-export default BurgerMenu;
+export default MenuBurger;

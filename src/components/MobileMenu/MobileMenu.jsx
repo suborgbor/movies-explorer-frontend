@@ -3,12 +3,12 @@ import './MobileMenu.css';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const MobileMenu = () => {
-  const [isActive, setActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const { pathname } = useLocation()
 
-  const handleOpen = () => setActive(!isActive);
+  const handleOpen = () => setIsActive(!isActive);
 
-const handleClose = () => setActive(false);
+  const handleClose = () => setIsActive(false);
 
 return (
   <section className={`${!isActive ? 'mobile' : 'mobile mobile_type_active'}`}>

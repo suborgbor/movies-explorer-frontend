@@ -1,5 +1,5 @@
 import './Profile.css';
-import useFormValidation from '../../hooks/useFormValidation';
+import useFormWithValidation from '../../hooks/useFormWithValidation';
 import { useContext, useState } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { useMoviesContext } from '../../contexts/MoviesContext';
@@ -8,32 +8,32 @@ export default function Profile({ onLogOut, updateUser }) {
   const currentUser = useContext(CurrentUserContext);
   const { resetMoviesContext } = useMoviesContext();
 
-  const handleLogOut = () => {
+  const LogOut = () => {
     onLogOut();
     resetMoviesContext();
   };
 
-  const { values, handleChange, errors, isValid } = useFormValidation({
+  const { values, handleChange, errors, isValid } = useFormWithValidation({
     name: currentUser.name,
     email: currentUser.email,
   });
   const [isEditProfile, setIsEditProfile] = useState(false);
-  const [isRequesting, setIsRequesting] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  const openEditProfile = (e) => {
+  const EditProfileOpen = (e) => {
     e.preventDefault();
     setIsEditProfile(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmitForm = (e) => {
     e.preventDefault();
-    setIsRequesting(true);
+    setIsError(true);
     updateUser(values)
       .then(() => {
         setIsEditProfile(false);
       })
       .finally(() => {
-        setIsRequesting(false);
+        setIsError(false);
       });
   };
 
@@ -48,7 +48,7 @@ export default function Profile({ onLogOut, updateUser }) {
           className="profile__form"
           name="profile"
           noValidate
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitForm}
         >
           <h1 className="profile__title">Привет, {currentUser.name}!</h1>
           <div className="profile__labels-container">
@@ -99,7 +99,7 @@ export default function Profile({ onLogOut, updateUser }) {
             <div className="profile__button-container">
               <button
                 type="button"
-                onClick={openEditProfile}
+                onClick={EditProfileOpen}
                 className="profile__button-edit"
               >
                 Редактировать
@@ -107,7 +107,7 @@ export default function Profile({ onLogOut, updateUser }) {
               <button
                 type="button"
                 className="profile__button-exit"
-                onClick={handleLogOut}
+                onClick={LogOut}
               >
                 Выйти из аккаунта
               </button>
@@ -117,7 +117,7 @@ export default function Profile({ onLogOut, updateUser }) {
               <button
                 type="submit"
                 className="profile__button-save"
-                disabled={requirementValidity || isRequesting}
+                disabled={requirementValidity || isError}
               >
                 Сохранить
               </button>

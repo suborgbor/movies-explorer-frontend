@@ -1,19 +1,19 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useFormValidation from '../../hooks/useFormValidation';
+import useFormWithValidation from '../../hooks/useFormWithValidation';
 import logo from '../../images/logo.svg';
 
 const Register = ({ registerUser }) => {
-  const [isRequesting, setIsRequesting] = useState(false);
+  const [IsError, setIsError] = useState(false);
   const { values, handleChange, resetForm, errors, isValid } =
-    useFormValidation();
+    useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsRequesting(true);
+    setIsError(true);
     registerUser(values).finally(() => {
-      setIsRequesting(false);
+      setIsError(false);
     });
   };
 
@@ -72,7 +72,7 @@ const Register = ({ registerUser }) => {
               <span className="register__error">{errors.password ? errors.password : ''}</span>
             </label>
           </div>
-          <button type="submit" className="register__button" disabled={!isValid ? true : isRequesting}>
+          <button type="submit" className="register__button" disabled={!isValid ? true : IsError}>
             Зарегистрироваться
           </button>
         </form>
